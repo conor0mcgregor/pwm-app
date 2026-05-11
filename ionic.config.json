@@ -1,0 +1,7 @@
+{
+  "name": "pwm-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
