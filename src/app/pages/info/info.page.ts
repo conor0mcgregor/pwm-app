@@ -4,7 +4,6 @@ import {
   IonHeader,
   IonIcon,
   IonItem,
-  IonLabel,
   IonList,
   IonTitle,
   IonToolbar,
@@ -14,6 +13,6 @@ import {
   selector: 'app-info',
   templateUrl: './info.page.html',
   styleUrls: ['./info.page.scss'],
-  imports: [IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar],
+  imports: [IonContent, IonHeader, IonIcon, IonItem, IonList, IonTitle, IonToolbar],
 })
 export class InfoPage {}
