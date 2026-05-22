@@ -30,17 +30,46 @@
   </form>
 
   <section class="reviews-feed">
-    <article class="review-item" *ngFor="let review of reviews">
+    <article class="review-item" *ngFor="let review of reviews" (click)="openReview(review)" style="cursor: pointer;">
       <div class="review-heading">
         <div>
-          <h2>{{ review.usuario }}</h2>
+          <h2>{{ review.titulo || review.usuario }}</h2>
           <ion-note>{{ review.fecha | date: 'dd/MM/yyyy' }}</ion-note>
         </div>
         <div class="stars" aria-label="Valoracion {{ review.valoracion }} de 5">
-          <ion-icon *ngFor="let star of starIndexes" [name]="star <= review.valoracion ? 'star' : 'star-outline'"></ion-icon>
+          <ion-icon *ngFor="let star of starIndexes" [name]="star <= (review.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
         </div>
       </div>
-      <p>{{ review.comentario }}</p>
+      <p>{{ review.resena || review.comentario }}</p>
     </article>
   </section>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeReview()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ selectedReview?.titulo || 'Reseña' }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeReview()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div *ngIf="selectedReview">
+          <img *ngIf="selectedReview.foto" [src]="selectedReview.foto" alt="Foto de la reseña" style="width:100%; border-radius:8px; margin-bottom:1rem;" />
+          
+          <h2>{{ selectedReview.titulo || 'Experiencia' }}</h2>
+          <p><strong>Usuario:</strong> {{ selectedReview.usuario }}</p>
+          <p *ngIf="selectedReview.nombreAnimal"><strong>Animal:</strong> {{ selectedReview.nombreAnimal }}</p>
+          <p><strong>Fecha:</strong> {{ selectedReview.fecha | date: 'dd/MM/yyyy' }}</p>
+          
+          <div class="stars" style="display:flex; gap:4px; color:var(--ion-color-warning); font-size:1.2rem; margin-bottom:1rem;">
+            <ion-icon *ngFor="let star of starIndexes" [name]="star <= (selectedReview.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
+          </div>
+
+          <p style="margin-top:1rem; line-height:1.5;">{{ selectedReview.resena || selectedReview.comentario }}</p>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

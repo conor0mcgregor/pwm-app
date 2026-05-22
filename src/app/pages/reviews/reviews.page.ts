@@ -4,12 +4,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
   IonList,
+  IonModal,
   IonNote,
   IonSelect,
   IonSelectOption,
@@ -30,12 +32,14 @@ import { ReviewService } from '../../services/review.service';
     CommonModule,
     ReactiveFormsModule,
     IonButton,
+    IonButtons,
     IonContent,
     IonHeader,
     IonIcon,
     IonItem,
     IonLabel,
     IonList,
+    IonModal,
     IonNote,
     IonSelect,
     IonSelectOption,
@@ -52,6 +56,8 @@ export class ReviewsPage implements OnInit {
 
   reviews: Resena[] = [];
   starIndexes = [1, 2, 3, 4, 5];
+  selectedReview: Resena | null = null;
+  isModalOpen = false;
 
   readonly reviewForm = this.fb.nonNullable.group({
     valoracion: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
@@ -65,6 +71,16 @@ export class ReviewsPage implements OnInit {
       .subscribe((reviews) => {
         this.reviews = reviews;
       });
+  }
+
+  openReview(review: Resena) {
+    this.selectedReview = review;
+    this.isModalOpen = true;
+  }
+
+  closeReview() {
+    this.isModalOpen = false;
+    this.selectedReview = null;
   }
 
   submit(): void {

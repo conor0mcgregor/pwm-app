@@ -24,8 +24,13 @@ export class ReviewService {
         }
         const mappedReviews = reviews.map((r: any) => ({
           id: r.id,
-          usuario: r.usuario || r.Usuario || 'Usuario Anónimo',
-          comentario: r.comentario || r.Comentario || 'Sin comentario',
+          usuario: r.usuario || r.Usuario || (r.idUsuario ? `Usuario ${r.idUsuario}` : 'Usuario Anónimo'),
+          idUsuario: r.idUsuario ?? r.IdUsuario,
+          titulo: r.titulo || r.Titulo || '',
+          comentario: r.comentario || r.Comentario || r.resena || r.Resena || 'Sin comentario',
+          resena: r.resena || r.Resena || r.comentario || r.Comentario || 'Sin comentario',
+          nombreAnimal: r.nombreAnimal || r.NombreAnimal || '',
+          foto: r.foto || r.Foto || '',
           valoracion: r.valoracion ?? r.Valoracion ?? 5,
           fecha: r.fecha || r.Fecha || new Date().toISOString()
         } as Resena));

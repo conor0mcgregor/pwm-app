@@ -1,7 +1,12 @@
 export interface Resena {
   id: string;
-  usuario: string;
-  comentario: string;
-  valoracion: number;
+  usuario?: string;
+  idUsuario?: number;
+  titulo?: string;
+  comentario?: string;
+  resena?: string;
+  nombreAnimal?: string;
+  foto?: string;
+  valoracion?: number;
   fecha: string;
 }
