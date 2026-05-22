@@ -1,75 +1,106 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/catalogo"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/catalogo" text="Atrás"></ion-back-button>
     </ion-buttons>
-    <ion-title>Ficha del animal</ion-title>
+    <ion-title>{{ (animal$ | async)?.nombre || 'Ficha' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ng-container *ngIf="animal$ | async as animal; else missingAnimal">
-    <section class="photo-strip" aria-label="Fotos de {{ animal.nombre }}">
-      <img *ngFor="let photo of animal.fotos" [src]="photo" [alt]="animal.nombre" />
-    </section>
+    <div class="detail-container">
+      <section class="photo-strip" aria-label="Fotos de {{ animal.nombre }}">
+        <div class="photo-slide" *ngFor="let photo of animal.fotos">
+          <img [src]="photo" [alt]="animal.nombre" />
+        </div>
+      </section>
 
-    <section class="detail-header">
-      <div>
-        <ion-note>{{ animal.especie }} · {{ animal.raza }}</ion-note>
-        <h1>{{ animal.nombre }}</h1>
-      </div>
-      <ion-badge [color]="animal.estado === 'disponible' ? 'success' : 'medium'">{{ animal.estado }}</ion-badge>
-    </section>
+      <section class="detail-header">
+        <div class="header-main">
+          <span class="animal-category">{{ animal.especie }} · {{ animal.raza }}</span>
+          <h1>{{ animal.nombre }}</h1>
+        </div>
+        <ion-badge [color]="animal.estado === 'disponible' ? 'success' : 'medium'">{{ animal.estado }}</ion-badge>
+      </section>
 
-    <ion-list lines="full">
-      <ion-item>
-        <ion-icon name="male-female-outline" slot="start"></ion-icon>
-        <ion-label>
-          <h2>Sexo</h2>
-          <p>{{ animal.sexo }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="calendar-outline" slot="start"></ion-icon>
-        <ion-label>
-          <h2>Edad</h2>
-          <p>{{ animal.edad }} anos</p>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="cash-outline" slot="start"></ion-icon>
-        <ion-label>
-          <h2>Tasa de adopcion</h2>
-          <p>{{ animal.tasaAdopcion | currency: 'EUR' }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+      <section class="features-section">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon-wrapper">
+              <ion-icon name="male-female-outline"></ion-icon>
+            </div>
+            <div class="feature-info">
+              <span class="feature-label">Sexo</span>
+              <span class="feature-value">{{ animal.sexo }}</span>
+            </div>
+          </div>
 
-    <section class="description">
-      <h2>Sobre {{ animal.nombre }}</h2>
-      <p>{{ animal.descripcion }}</p>
-      <div class="chips">
-        <ion-chip>{{ animal.peso }} kg</ion-chip>
-        <ion-chip>{{ animal.estado === 'disponible' ? 'Listo para conocer' : 'Ya adoptado' }}</ion-chip>
-      </div>
-    </section>
+          <div class="feature-card">
+            <div class="icon-wrapper">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+            <div class="feature-info">
+              <span class="feature-label">Edad</span>
+              <span class="feature-value">{{ animal.edad }} {{ animal.edad === 1 ? 'año' : 'años' }}</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-wrapper">
+              <ion-icon name="cash-outline"></ion-icon>
+            </div>
+            <div class="feature-info">
+              <span class="feature-label">Adopción</span>
+              <span class="feature-value">{{ animal.tasaAdopcion | currency: 'EUR' }}</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-wrapper">
+              <ion-icon name="scale-outline"></ion-icon>
+            </div>
+            <div class="feature-info">
+              <span class="feature-label">Peso</span>
+              <span class="feature-value">{{ animal.peso }} kg</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="description">
+        <h2>Sobre {{ animal.nombre }}</h2>
+        <p>{{ animal.descripcion }}</p>
+        <div class="chips-container">
+          <ion-chip class="custom-chip"><ion-icon name="sparkles-outline"></ion-icon> <ion-label>{{ animal.estado === 'disponible' ? 'Listo para conocer' : 'Ya adoptado' }}</ion-label></ion-chip>
+          <ion-chip class="custom-chip"><ion-icon name="shield-checkmark-outline"></ion-icon> <ion-label>Vacunas al día</ion-label></ion-chip>
+        </div>
+      </section>
+    </div>
 
     <section class="sticky-action">
-      <ion-button
-        expand="block"
-        size="large"
-        [disabled]="animal.estado !== 'disponible'"
-        [routerLink]="['/animal', animal.id, 'adoptar']"
-      >
-        <ion-icon name="heart-outline" slot="start"></ion-icon>
-        Solicitar adopcion
-      </ion-button>
+      <div class="action-wrapper">
+        <ion-button
+          expand="block"
+          size="large"
+          [disabled]="animal.estado !== 'disponible'"
+          [routerLink]="['/animal', animal.id, 'adoptar']"
+          class="adopt-button"
+        >
+          <ion-icon name="heart" slot="start"></ion-icon>
+          Solicitar adopción
+        </ion-button>
+      </div>
     </section>
   </ng-container>
 
   <ng-template #missingAnimal>
-    <ion-text color="medium" class="missing">
-      No hemos encontrado esta ficha.
-    </ion-text>
+    <div class="missing-container">
+      <ion-icon name="alert-circle-outline" class="missing-icon"></ion-icon>
+      <h3>Ficha no encontrada</h3>
+      <p>No hemos podido cargar la información de este animal.</p>
+      <ion-button routerLink="/tabs/catalogo" fill="clear">Volver al catálogo</ion-button>
+    </div>
   </ng-template>
 </ion-content>
+

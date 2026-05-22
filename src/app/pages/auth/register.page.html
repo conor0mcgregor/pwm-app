@@ -5,53 +5,77 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <section class="auth-hero compact">
-    <img src="assets/img/Logo.png" alt="Refugio Animal" />
-    <h1>Crea tu cuenta</h1>
-    <p>Guardaremos tus datos para agilizar las solicitudes de adopcion.</p>
-  </section>
+  <div class="auth-wrapper">
+    <div class="auth-card register-card">
+      <section class="auth-hero compact">
+        <div class="logo-wrapper">
+          <img src="assets/img/Logo.png" alt="Refugio Animal" />
+        </div>
+        <h1>Crea tu cuenta</h1>
+        <p>Guardaremos tus datos para agilizar las solicitudes de adopción.</p>
+      </section>
 
-  <form [formGroup]="registerForm" (ngSubmit)="submit()" class="auth-form">
-    <ion-list lines="full">
-      <ion-item>
-        <ion-label position="stacked">Nombre</ion-label>
-        <ion-input formControlName="nombre" autocomplete="given-name"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Apellidos</ion-label>
-        <ion-input formControlName="apellidos" autocomplete="family-name"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">DNI</ion-label>
-        <ion-input formControlName="dni"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Direccion</ion-label>
-        <ion-input formControlName="direccion" autocomplete="street-address"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Telefono</ion-label>
-        <ion-input formControlName="telefono" type="tel" autocomplete="tel"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input formControlName="email" type="email" autocomplete="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Contrasena</ion-label>
-        <ion-input formControlName="password" type="password" autocomplete="new-password"></ion-input>
-      </ion-item>
-    </ion-list>
+      <form [formGroup]="registerForm" (ngSubmit)="submit()" class="auth-form">
+        <ion-list lines="none" class="auth-fields-list">
+          <div class="form-grid">
+            <ion-item class="auth-input-item">
+              <ion-label position="stacked">Nombre</ion-label>
+              <ion-input formControlName="nombre" autocomplete="given-name" placeholder="Tu nombre"></ion-input>
+            </ion-item>
+            <ion-item class="auth-input-item">
+              <ion-label position="stacked">Apellidos</ion-label>
+              <ion-input formControlName="apellidos" autocomplete="family-name" placeholder="Tus apellidos"></ion-input>
+            </ion-item>
+          </div>
 
-    <ion-text color="danger" class="field-error" *ngIf="registerForm.touched && registerForm.invalid">
-      Completa todos los campos. La contrasena debe tener al menos 6 caracteres.
-    </ion-text>
+          <div class="form-grid">
+            <ion-item class="auth-input-item">
+              <ion-label position="stacked">DNI</ion-label>
+              <ion-input formControlName="dni" placeholder="12345678X"></ion-input>
+            </ion-item>
+            <ion-item class="auth-input-item">
+              <ion-label position="stacked">Teléfono</ion-label>
+              <ion-input formControlName="telefono" type="tel" autocomplete="tel" placeholder="600 000 000"></ion-input>
+            </ion-item>
+          </div>
 
-    <ion-button type="submit" expand="block" size="large" [disabled]="isSubmitting">
-      <ion-icon name="create-outline" slot="start"></ion-icon>
-      Registrarme
-    </ion-button>
+          <ion-item class="auth-input-item">
+            <ion-label position="stacked">Dirección</ion-label>
+            <ion-input formControlName="direccion" autocomplete="street-address" placeholder="Calle, número, piso, puerta"></ion-input>
+          </ion-item>
 
-    <ion-button fill="clear" expand="block" routerLink="/login">Ya tengo cuenta</ion-button>
-  </form>
+          <ion-item class="auth-input-item">
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email" type="email" autocomplete="email" placeholder="correo@ejemplo.com"></ion-input>
+          </ion-item>
+          
+          <ion-item class="auth-input-item">
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input formControlName="password" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <div class="error-container" *ngIf="registerForm.touched && registerForm.invalid">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <ion-text class="field-error">
+            Completa todos los campos. La contraseña debe tener al menos 6 caracteres.
+          </ion-text>
+        </div>
+
+        <ion-button type="submit" class="btn-primary" expand="block" size="large" [disabled]="isSubmitting">
+          <ion-icon name="create-outline" slot="start"></ion-icon>
+          Registrarme
+        </ion-button>
+
+        <div class="auth-footer">
+          <p>¿Ya tienes cuenta?</p>
+          <ion-button fill="clear" class="btn-link" routerLink="/login">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            Iniciar sesión
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
 </ion-content>
+

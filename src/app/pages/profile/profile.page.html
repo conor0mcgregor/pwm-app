@@ -5,80 +5,124 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <section class="profile-empty" *ngIf="!currentUser">
-    <ion-icon name="person-circle-outline"></ion-icon>
-    <h1>Accede a tu area personal</h1>
-    <p>Inicia sesion para editar tus datos y revisar tus adopciones.</p>
-    <ion-button expand="block" routerLink="/login">
-      <ion-icon name="log-in-outline" slot="start"></ion-icon>
-      Iniciar sesion
-    </ion-button>
-    <ion-button fill="clear" expand="block" routerLink="/registro">Crear cuenta</ion-button>
-  </section>
-
-  <ng-container *ngIf="currentUser">
-    <section class="profile-header">
-      <div>
-        <ion-note>{{ currentUser.email }}</ion-note>
-        <h1>{{ currentUser.nombre || 'Mi perfil' }} {{ currentUser.apellidos }}</h1>
+  <div class="profile-container">
+    <!-- Logged out Empty State -->
+    <section class="profile-empty" *ngIf="!currentUser">
+      <div class="empty-art">
+        <div class="icon-bubble">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
       </div>
-      <ion-button fill="clear" color="medium" (click)="logout()">
-        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
-      </ion-button>
+      <h1>Accede a tu área personal</h1>
+      <p>Inicia sesión para editar tus datos personales, gestionar tu cuenta y revisar tus solicitudes de adopción.</p>
+      
+      <div class="empty-actions">
+        <ion-button expand="block" routerLink="/login" class="login-btn">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Iniciar sesión
+        </ion-button>
+        <ion-button fill="clear" expand="block" routerLink="/registro" class="register-btn">
+          Crear cuenta nueva
+        </ion-button>
+      </div>
     </section>
 
-    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
-      <ion-list lines="full">
-        <ion-item>
-          <ion-label position="stacked">Nombre</ion-label>
-          <ion-input formControlName="nombre"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Apellidos</ion-label>
-          <ion-input formControlName="apellidos"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">DNI</ion-label>
-          <ion-input formControlName="dni"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Direccion</ion-label>
-          <ion-input formControlName="direccion"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Telefono</ion-label>
-          <ion-input formControlName="telefono" type="tel"></ion-input>
-        </ion-item>
-      </ion-list>
+    <!-- Logged In Content -->
+    <ng-container *ngIf="currentUser">
+      <section class="profile-header-card">
+        <div class="header-content">
+          <div class="avatar-wrapper">
+            <ion-icon name="person-circle"></ion-icon>
+          </div>
+          <div class="user-details">
+            <h1>{{ currentUser.nombre || 'Mi perfil' }} {{ currentUser.apellidos }}</h1>
+            <p><ion-icon name="mail-outline"></ion-icon> {{ currentUser.email }}</p>
+          </div>
+        </div>
+        <ion-button fill="clear" color="danger" class="logout-btn" (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          Cerrar sesión
+        </ion-button>
+      </section>
 
-      <ion-button type="submit" expand="block" [disabled]="isSaving">
-        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-        Guardar cambios
-      </ion-button>
-    </form>
+      <div class="profile-content-grid">
+        <!-- Profile Info Form -->
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form-wrapper">
+          <div class="section-card">
+            <div class="section-header">
+              <ion-icon name="create-outline"></ion-icon>
+              <h2>Mis Datos</h2>
+            </div>
+            
+            <ion-list lines="none" class="custom-list">
+              <ion-item class="form-item">
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input formControlName="nombre" placeholder="Introduce tu nombre"></ion-input>
+              </ion-item>
+              
+              <ion-item class="form-item">
+                <ion-label position="stacked">Apellidos</ion-label>
+                <ion-input formControlName="apellidos" placeholder="Introduce tus apellidos"></ion-input>
+              </ion-item>
+              
+              <ion-item class="form-item">
+                <ion-label position="stacked">DNI</ion-label>
+                <ion-input formControlName="dni" placeholder="Introduce tu DNI"></ion-input>
+              </ion-item>
+              
+              <ion-item class="form-item">
+                <ion-label position="stacked">Dirección</ion-label>
+                <ion-input formControlName="direccion" placeholder="Introduce tu dirección"></ion-input>
+              </ion-item>
+              
+              <ion-item class="form-item">
+                <ion-label position="stacked">Teléfono</ion-label>
+                <ion-input formControlName="telefono" type="tel" placeholder="Introduce tu teléfono"></ion-input>
+              </ion-item>
+            </ion-list>
 
-    <section class="adopted-section">
-      <h2>Mis adoptados</h2>
-      <ion-text color="medium" *ngIf="!adoptedAnimals.length">
-        Todavia no tienes solicitudes de adopcion.
-      </ion-text>
+            <ion-button type="submit" expand="block" [disabled]="isSaving" class="save-btn">
+              <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+              Guardar cambios
+            </ion-button>
+          </div>
+        </form>
 
-      <ion-list lines="full" *ngIf="adoptedAnimals.length">
-        <ion-item *ngFor="let adoption of adoptedAnimals">
-          <ng-container *ngIf="adoption.animal as animal">
-            <ion-thumbnail slot="start">
-              <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
-            </ion-thumbnail>
-            <ion-label>
-              <h3>{{ animal.nombre }}</h3>
-              <p>{{ adoption.fecha | date: 'dd/MM/yyyy' }} · {{ animal.raza }}</p>
-            </ion-label>
-          </ng-container>
-          <ion-button fill="clear" color="danger" slot="end" (click)="cancelAdoption(adoption.id)">
-            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
-    </section>
-  </ng-container>
+        <!-- Adopted Pets Section -->
+        <section class="adopted-section">
+          <div class="section-card">
+            <div class="section-header">
+              <ion-icon name="heart-outline"></ion-icon>
+              <h2>Mis Solicitudes</h2>
+            </div>
+            
+            <div class="empty-adopted" *ngIf="!adoptedAnimals.length">
+              <ion-icon name="paw-outline" class="paw-icon"></ion-icon>
+              <p>Todavía no tienes solicitudes de adopción activas.</p>
+              <ion-button fill="clear" routerLink="/tabs/catalogo" class="explore-btn">Explorar catálogo</ion-button>
+            </div>
+
+            <div class="adopted-list" *ngIf="adoptedAnimals.length">
+              <div class="adopted-card" *ngFor="let adoption of adoptedAnimals">
+                <ng-container *ngIf="adoption.animal as animal">
+                  <div class="card-media">
+                    <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
+                  </div>
+                  <div class="card-info">
+                    <h3>{{ animal.nombre }}</h3>
+                    <span class="breed-text">{{ animal.raza }}</span>
+                    <span class="date-text">Solicitado: {{ adoption.fecha | date: 'dd/MM/yyyy' }}</span>
+                  </div>
+                  <ion-button fill="clear" color="danger" class="cancel-btn" (click)="cancelAdoption(adoption.id)" aria-label="Cancelar solicitud">
+                    <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </ng-container>
+  </div>
 </ion-content>
+

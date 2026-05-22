@@ -6,10 +6,13 @@
 
 <ion-content [fullscreen]="true">
   <section class="catalog-hero">
-    <img src="assets/img/Logo.png" alt="Refugio Animal" />
-    <div>
-      <p>Encuentra un companero</p>
-      <h1>Animales en adopcion</h1>
+    <div class="hero-brand">
+      <img src="assets/img/Logo.png" alt="Refugio Animal Logo" class="brand-logo" />
+      <span class="brand-tagline">Refugio de Animales</span>
+    </div>
+    <div class="hero-content">
+      <h1>Encuentra tu nuevo compañero</h1>
+      <p>Hay un amigo especial esperándote para comenzar una nueva historia juntos.</p>
     </div>
   </section>
 
@@ -17,37 +20,41 @@
     <ion-searchbar
       [(ngModel)]="filters.search"
       [debounce]="200"
-      placeholder="Buscar por nombre, raza o descripcion"
+      placeholder="Buscar por nombre, raza o descripción..."
       show-clear-button="focus"
       (ionInput)="applyFilters()"
     ></ion-searchbar>
 
-    <ion-segment [(ngModel)]="filters.especie" scrollable="true" (ionChange)="applyFilters()">
-      <ion-segment-button *ngFor="let especie of especies" [value]="especie">
-        <ion-label>{{ especie === 'todos' ? 'Todos' : especie }}</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+    <div class="filter-controls">
+      <div class="segment-container">
+        <ion-segment [(ngModel)]="filters.especie" scrollable="true" (ionChange)="applyFilters()">
+          <ion-segment-button *ngFor="let especie of especies" [value]="especie">
+            <ion-label>{{ especie === 'todos' ? 'Todos' : especie }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
 
-    <ion-list lines="none">
-      <ion-item>
-        <ion-icon name="funnel-outline" slot="start"></ion-icon>
-        <ion-label>Edad</ion-label>
-        <ion-select [(ngModel)]="filters.edad" interface="popover" (ionChange)="applyFilters()">
-          <ion-select-option value="todas">Todas</ion-select-option>
-          <ion-select-option value="joven">Hasta 2 anos</ion-select-option>
-          <ion-select-option value="adulto">3 a 7 anos</ion-select-option>
-          <ion-select-option value="senior">Mas de 7 anos</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+      <div class="select-container">
+        <ion-item lines="none" class="age-filter-item">
+          <ion-icon name="funnel-outline" slot="start"></ion-icon>
+          <ion-label>Edad</ion-label>
+          <ion-select [(ngModel)]="filters.edad" interface="popover" (ionChange)="applyFilters()">
+            <ion-select-option value="todas">Todas</ion-select-option>
+            <ion-select-option value="joven">Hasta 2 años</ion-select-option>
+            <ion-select-option value="adulto">3 a 7 años</ion-select-option>
+            <ion-select-option value="senior">Más de 7 años</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </div>
   </section>
 
   <div class="loading-list" *ngIf="isLoading">
     <ion-card *ngFor="let item of [1, 2, 3]">
       <ion-skeleton-text [animated]="true" class="image-skeleton"></ion-skeleton-text>
       <ion-card-header>
-        <ion-skeleton-text [animated]="true" style="width: 55%"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" style="width: 35%"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 55%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 35%; height: 14px;"></ion-skeleton-text>
       </ion-card-header>
     </ion-card>
   </div>
@@ -55,36 +62,40 @@
   <ion-row class="animal-grid" *ngIf="!isLoading && filteredAnimals.length">
     <ion-col size="12" sizeMd="6" sizeLg="4" *ngFor="let animal of filteredAnimals; trackBy: trackByAnimalId">
       <ion-card class="animal-card">
-        <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
-        <ion-card-header>
-          <div class="card-heading">
-            <div>
-              <ion-card-title>{{ animal.nombre }}</ion-card-title>
-              <ion-card-subtitle>{{ animal.raza }} · {{ animal.edad }} anos</ion-card-subtitle>
-            </div>
+        <div class="card-media">
+          <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
+          <div class="badge-overlay">
             <ion-badge [color]="animal.estado === 'disponible' ? 'success' : 'medium'">
               {{ animal.estado }}
             </ion-badge>
           </div>
+        </div>
+        
+        <ion-card-header>
+          <ion-card-title>{{ animal.nombre }}</ion-card-title>
+          <ion-card-subtitle>{{ animal.raza }} · {{ animal.edad }} {{ animal.edad === 1 ? 'año' : 'años' }}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
-          <p>{{ animal.descripcion }}</p>
+          <p class="description-text">{{ animal.descripcion }}</p>
           <div class="animal-meta">
-            <ion-note>{{ animal.especie }}</ion-note>
-            <ion-note>{{ animal.sexo }}</ion-note>
-            <ion-note>{{ animal.tasaAdopcion | currency: 'EUR' }}</ion-note>
+            <ion-note class="meta-tag"><ion-icon name="paw-outline"></ion-icon> <span>{{ animal.especie }}</span></ion-note>
+            <ion-note class="meta-tag"><ion-icon name="male-female-outline"></ion-icon> <span>{{ animal.sexo }}</span></ion-note>
+            <ion-note class="meta-tag price"><ion-icon name="cash-outline"></ion-icon> <span>{{ animal.tasaAdopcion | currency: 'EUR' }}</span></ion-note>
           </div>
-          <ion-button expand="block" [routerLink]="['/animal', animal.id]">
+          <ion-button expand="block" [routerLink]="['/animal', animal.id]" class="view-details-btn">
             <ion-icon name="heart-outline" slot="start"></ion-icon>
-            Ver ficha
+            Conocer a {{ animal.nombre }}
           </ion-button>
         </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>
 
-  <ion-text color="medium" class="empty-state" *ngIf="!isLoading && !filteredAnimals.length">
-    No hay animales que coincidan con esos filtros.
-  </ion-text>
+  <div class="empty-state" *ngIf="!isLoading && !filteredAnimals.length">
+    <ion-icon name="alert-circle-outline" class="empty-icon"></ion-icon>
+    <h3>Sin resultados</h3>
+    <p>No hay animales que coincidan con los filtros aplicados. Intenta cambiar tu búsqueda.</p>
+  </div>
 </ion-content>
+

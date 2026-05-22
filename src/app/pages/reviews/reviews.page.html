@@ -1,75 +1,114 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Resenas</ion-title>
+    <ion-title>Reseñas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <section class="reviews-intro">
-    <h1>Experiencias con el refugio</h1>
-    <p>Comparte como ha sido tu proceso y ayuda a otras familias a dar el paso.</p>
-  </section>
+  <div class="reviews-container">
+    <section class="reviews-intro">
+      <h1>Experiencias con el refugio</h1>
+      <p>Comparte cómo ha sido tu proceso de adopción y ayuda a otras familias a dar el paso hacia una adopción responsable.</p>
+    </section>
 
-  <form [formGroup]="reviewForm" (ngSubmit)="submit()" class="review-form">
-    <ion-list lines="full">
-      <ion-item>
-        <ion-label>Valoracion</ion-label>
-        <ion-select formControlName="valoracion" interface="popover">
-          <ion-select-option *ngFor="let star of starIndexes" [value]="star">{{ star }} estrellas</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Comentario</ion-label>
-        <ion-textarea formControlName="comentario" auto-grow="true" placeholder="Cuenta tu experiencia"></ion-textarea>
-      </ion-item>
-    </ion-list>
-    <ion-button type="submit" expand="block">
-      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-      Anadir resena
-    </ion-button>
-  </form>
+    <!-- Review Submission Form -->
+    <form [formGroup]="reviewForm" (ngSubmit)="submit()" class="review-form">
+      <div class="form-card">
+        <div class="form-header">
+          <h2>Cuéntanos tu experiencia</h2>
+          <p>Tu opinión es de gran valor para nosotros y para futuros adoptantes.</p>
+        </div>
 
-  <section class="reviews-feed">
-    <article class="review-item" *ngFor="let review of reviews" (click)="openReview(review)" style="cursor: pointer;">
-      <div class="review-heading">
-        <div>
-          <h2>{{ review.titulo || review.usuario }}</h2>
-          <ion-note>{{ review.fecha | date: 'dd/MM/yyyy' }}</ion-note>
-        </div>
-        <div class="stars" aria-label="Valoracion {{ review.valoracion }} de 5">
-          <ion-icon *ngFor="let star of starIndexes" [name]="star <= (review.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
-        </div>
+        <ion-list lines="none" class="custom-list">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Valoración</ion-label>
+            <ion-select formControlName="valoracion" interface="popover" placeholder="Selecciona estrellas">
+              <ion-select-option *ngFor="let star of starIndexes" [value]="star">
+                {{ star }} {{ star === 1 ? 'estrella' : 'estrellas' }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <ion-item class="form-item">
+            <ion-label position="stacked">Tu Comentario</ion-label>
+            <ion-textarea formControlName="comentario" auto-grow="true" rows="3" placeholder="Escribe aquí tu reseña o comentario..."></ion-textarea>
+          </ion-item>
+        </ion-list>
+
+        <ion-button type="submit" expand="block" class="submit-review-btn">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Añadir reseña
+        </ion-button>
       </div>
-      <p>{{ review.resena || review.comentario }}</p>
-    </article>
-  </section>
+    </form>
 
-  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeReview()">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>{{ selectedReview?.titulo || 'Reseña' }}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="closeReview()">Cerrar</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <div *ngIf="selectedReview">
-          <img *ngIf="selectedReview.foto" [src]="selectedReview.foto" alt="Foto de la reseña" style="width:100%; border-radius:8px; margin-bottom:1rem;" />
-          
-          <h2>{{ selectedReview.titulo || 'Experiencia' }}</h2>
-          <p><strong>Usuario:</strong> {{ selectedReview.usuario }}</p>
-          <p *ngIf="selectedReview.nombreAnimal"><strong>Animal:</strong> {{ selectedReview.nombreAnimal }}</p>
-          <p><strong>Fecha:</strong> {{ selectedReview.fecha | date: 'dd/MM/yyyy' }}</p>
-          
-          <div class="stars" style="display:flex; gap:4px; color:var(--ion-color-warning); font-size:1.2rem; margin-bottom:1rem;">
-            <ion-icon *ngFor="let star of starIndexes" [name]="star <= (selectedReview.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
+    <!-- Reviews List -->
+    <section class="reviews-feed">
+      <div class="feed-header">
+        <h2>Opiniones de la comunidad</h2>
+      </div>
+      
+      <div class="feed-grid">
+        <article class="review-item-card" *ngFor="let review of reviews" (click)="openReview(review)">
+          <div class="card-header">
+            <div class="user-meta">
+              <h3>{{ review.titulo || review.usuario }}</h3>
+              <span class="review-date">{{ review.fecha | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="stars-rating" aria-label="Valoración {{ review.valoracion }} de 5">
+              <ion-icon *ngFor="let star of starIndexes" [name]="star <= (review.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
+            </div>
           </div>
+          <p class="review-text">{{ review.resena || review.comentario }}</p>
+          <div class="card-footer" *ngIf="review.nombreAnimal">
+            <ion-icon name="paw"></ion-icon>
+            <span>Adoptó a {{ review.nombreAnimal }}</span>
+          </div>
+        </article>
+      </div>
+    </section>
 
-          <p style="margin-top:1rem; line-height:1.5;">{{ selectedReview.resena || selectedReview.comentario }}</p>
-        </div>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+    <!-- Review Detail Modal -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeReview()" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.75, 0.9]" class="premium-bottom-modal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Detalle de la Reseña</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="closeReview()" color="primary">Cerrar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding modal-content">
+          <div *ngIf="selectedReview" class="modal-detail-wrapper">
+            <div class="modal-media" *ngIf="selectedReview.foto">
+              <img [src]="selectedReview.foto" alt="Foto de la reseña" />
+            </div>
+            
+            <div class="modal-header-section">
+              <h2>{{ selectedReview.titulo || 'Experiencia' }}</h2>
+              <div class="modal-meta-row">
+                <span class="user"><ion-icon name="person-outline"></ion-icon> {{ selectedReview.usuario }}</span>
+                <span class="date"><ion-icon name="calendar-outline"></ion-icon> {{ selectedReview.fecha | date: 'dd/MM/yyyy' }}</span>
+              </div>
+              
+              <div class="modal-rating">
+                <ion-icon *ngFor="let star of starIndexes" [name]="star <= (selectedReview.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
+              </div>
+
+              <div class="adopted-badge" *ngIf="selectedReview.nombreAnimal">
+                <ion-icon name="paw"></ion-icon>
+                <span>Adoptado: <strong>{{ selectedReview.nombreAnimal }}</strong></span>
+              </div>
+            </div>
+
+            <div class="modal-body-section">
+              <p>{{ selectedReview.resena || selectedReview.comentario }}</p>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
 </ion-content>
+

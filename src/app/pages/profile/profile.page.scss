@@ -1,60 +1,277 @@
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px 12px 104px;
+}
+
+// Logged out empty state
 .profile-empty {
-  display: flex;
-  min-height: 70vh;
-  flex-direction: column;
-  justify-content: center;
-  padding: 28px 24px;
+  padding: 48px 24px;
   text-align: center;
-}
-
-.profile-empty ion-icon {
-  align-self: center;
-  color: var(--ion-color-primary);
-  font-size: 4rem;
-}
-
-.profile-empty h1,
-.profile-header h1 {
-  margin: 10px 0 6px;
-  font-size: 1.8rem;
-  font-weight: 800;
-}
-
-.profile-empty p {
-  margin: 0 0 20px;
-  color: var(--ion-color-medium);
-  line-height: 1.45;
-}
-
-.profile-header {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .empty-art {
+    margin-bottom: 24px;
+
+    .icon-bubble {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: rgba(42, 111, 98, 0.05);
+      color: var(--ion-color-primary);
+
+      ion-icon {
+        font-size: 3.5rem;
+      }
+    }
+  }
+
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--ion-text-color);
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: #556360;
+    max-width: 320px;
+    line-height: 1.5;
+    margin: 0 0 32px;
+  }
+
+  .empty-actions {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .login-btn {
+      margin: 0;
+    }
+    
+    .register-btn {
+      margin: 0;
+    }
+  }
+}
+
+// Profile Header Banner Card
+.profile-header-card {
+  background: linear-gradient(135deg, rgba(42, 111, 98, 0.06) 0%, rgba(42, 111, 98, 0.02) 100%);
+  border-radius: var(--border-radius-lg);
+  padding: 24px 20px;
+  border: 1px solid rgba(42, 111, 98, 0.08);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .avatar-wrapper {
+      color: var(--ion-color-primary);
+      display: flex;
+      align-items: center;
+      
+      ion-icon {
+        font-size: 3.8rem;
+      }
+    }
+
+    .user-details {
+      h1 {
+        margin: 0;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--ion-text-color);
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        margin: 4px 0 0;
+        font-size: 0.9rem;
+        color: var(--ion-color-primary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        ion-icon {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+
+  .logout-btn {
+    margin: 0;
+    --color: var(--ion-color-danger);
+    font-weight: 600;
+  }
+}
+
+// Content grid
+.profile-content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-card {
+  background: var(--ion-color-light);
+  border-radius: var(--border-radius-lg);
+  padding: 24px 20px;
+  box-shadow: var(--soft-shadow);
+  border: 1px solid rgba(42, 111, 98, 0.05);
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    color: var(--ion-color-primary);
+
+    ion-icon {
+      font-size: 1.35rem;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ion-text-color);
+    }
+  }
+}
+
+.custom-list {
+  background: transparent;
+  padding: 0;
+}
+
+.form-item {
+  --background: var(--ion-color-light);
+  border: 1px solid rgba(42, 111, 98, 0.08);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 16px !important;
+
+  &.item-has-focus {
+    border-color: var(--ion-color-primary);
+  }
+}
+
+.save-btn {
+  margin: 8px 0 0;
+  --box-shadow: var(--button-shadow);
+}
+
+// Adopted Section details
+.empty-adopted {
+  padding: 32px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .paw-icon {
+    font-size: 3rem;
+    color: rgba(42, 111, 98, 0.15);
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin: 0 0 16px;
+    font-size: 0.95rem;
+    color: var(--ion-color-medium);
+  }
+
+  .explore-btn {
+    margin: 0;
+  }
+}
+
+.adopted-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.adopted-card {
+  display: flex;
+  align-items: center;
   gap: 14px;
-  padding: 22px 18px 8px;
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(42, 111, 98, 0.06);
+  background: var(--ion-color-light);
+  transition: var(--transition-smooth);
+
+  &:hover {
+    box-shadow: var(--soft-shadow);
+    border-color: rgba(42, 111, 98, 0.12);
+  }
+
+  .card-media {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    h3 {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ion-text-color);
+    }
+
+    .breed-text {
+      font-size: 0.8rem;
+      color: var(--ion-color-primary);
+      margin-top: 2px;
+    }
+
+    .date-text {
+      font-size: 0.78rem;
+      color: var(--ion-color-medium);
+      margin-top: 4px;
+    }
+  }
+
+  .cancel-btn {
+    margin: 0;
+    --color: var(--ion-color-danger);
+    --padding-start: 8px;
+    --padding-end: 8px;
+  }
 }
 
-.profile-form,
-.adopted-section {
-  padding: 8px 14px 0;
-}
-
-.profile-form ion-list,
-.adopted-section ion-list {
-  margin-bottom: 16px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.adopted-section {
-  padding-bottom: 96px;
-}
-
-.adopted-section h2 {
-  margin: 20px 4px 12px;
-  font-size: 1.25rem;
-}
-
-ion-thumbnail {
-  --border-radius: 8px;
-  --size: 64px;
-}

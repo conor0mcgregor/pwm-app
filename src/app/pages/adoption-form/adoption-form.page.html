@@ -1,61 +1,78 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/catalogo"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/catalogo" text="Atrás"></ion-back-button>
     </ion-buttons>
-    <ion-title>Solicitud</ion-title>
+    <ion-title>Solicitud de Adopción</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ng-container *ngIf="animal$ | async as animal">
-    <section class="request-summary">
-      <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
-      <div>
-        <ion-note>Solicitud de adopcion</ion-note>
-        <h1>{{ animal.nombre }}</h1>
-        <p>{{ animal.raza }} · {{ animal.edad }} anos</p>
+  <div class="form-container">
+    <ng-container *ngIf="animal$ | async as animal">
+      <section class="request-summary">
+        <div class="summary-card">
+          <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
+          <div class="summary-details">
+            <span class="summary-badge">Solicitud de adopción</span>
+            <h1>{{ animal.nombre }}</h1>
+            <p>{{ animal.raza }} · {{ animal.edad }} {{ animal.edad === 1 ? 'año' : 'años' }}</p>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <form [formGroup]="adoptionForm" (ngSubmit)="submit()" class="form-shell">
+      <div class="form-card">
+        <div class="form-header">
+          <h2>Formulario de solicitud</h2>
+          <p>Cuéntanos un poco sobre ti para ayudarnos a evaluar si eres la familia ideal.</p>
+        </div>
+
+        <ion-list lines="none" class="custom-list">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Motivo de la adopción</ion-label>
+            <ion-textarea
+              formControlName="motivo"
+              auto-grow="true"
+              rows="4"
+              placeholder="Cuéntanos por qué quieres adoptar y cómo sería su día a día contigo..."
+            ></ion-textarea>
+          </ion-item>
+          
+          <ion-text color="danger" class="field-error" *ngIf="adoptionForm.controls.motivo.touched && adoptionForm.controls.motivo.invalid">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            El motivo es obligatorio y debe tener al menos 20 caracteres.
+          </ion-text>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Tipo de vivienda</ion-label>
+            <ion-select formControlName="vivienda" interface="popover" placeholder="Selecciona el tipo">
+              <ion-select-option value="piso">Piso</ion-select-option>
+              <ion-select-option value="casa">Casa</ion-select-option>
+              <ion-select-option value="casa-con-jardin">Casa con jardín</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Experiencia previa con mascotas</ion-label>
+            <ion-input formControlName="experiencia" placeholder="Ej: He tenido perros antes... (opcional)"></ion-input>
+          </ion-item>
+        </ion-list>
       </div>
-    </section>
-  </ng-container>
 
-  <form [formGroup]="adoptionForm" (ngSubmit)="submit()" class="form-shell">
-    <ion-list lines="full">
-      <ion-item>
-        <ion-label position="stacked">Motivo de la adopcion</ion-label>
-        <ion-textarea
-          formControlName="motivo"
-          auto-grow="true"
-          placeholder="Cuentanos por que quieres adoptar y como seria su dia a dia contigo."
-        ></ion-textarea>
-      </ion-item>
-      <ion-text color="danger" class="field-error" *ngIf="adoptionForm.controls.motivo.touched && adoptionForm.controls.motivo.invalid">
-        El motivo es obligatorio y debe tener al menos 20 caracteres.
-      </ion-text>
+      <div class="form-actions">
+        <ion-button type="submit" expand="block" size="large" [disabled]="isSubmitting" class="submit-btn">
+          <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+          Enviar solicitud
+        </ion-button>
 
-      <ion-item>
-        <ion-label>Tipo de vivienda</ion-label>
-        <ion-select formControlName="vivienda" interface="popover">
-          <ion-select-option value="piso">Piso</ion-select-option>
-          <ion-select-option value="casa">Casa</ion-select-option>
-          <ion-select-option value="casa-con-jardin">Casa con jardin</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Experiencia previa</ion-label>
-        <ion-input formControlName="experiencia" placeholder="Opcional"></ion-input>
-      </ion-item>
-    </ion-list>
-
-    <ion-button type="submit" expand="block" size="large" [disabled]="isSubmitting">
-      <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-      Enviar solicitud
-    </ion-button>
-
-    <ion-button fill="clear" expand="block" routerLink="/login">
-      <ion-icon name="log-in-outline" slot="start"></ion-icon>
-      Iniciar sesion antes
-    </ion-button>
-  </form>
+        <ion-button fill="clear" expand="block" routerLink="/login" class="login-prompt-btn">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Iniciar sesión con otra cuenta
+        </ion-button>
+      </div>
+    </form>
+  </div>
 </ion-content>
+
