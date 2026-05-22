@@ -1,13 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/catalogo" text="Atrás"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ (animal$ | async)?.nombre || 'Ficha' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
+  <div class="floating-back-btn">
+    <ion-back-button defaultHref="/tabs/catalogo" text=""></ion-back-button>
+  </div>
   <ng-container *ngIf="animal$ | async as animal; else missingAnimal">
     <div class="detail-container">
       <section class="photo-strip" aria-label="Fotos de {{ animal.nombre }}">

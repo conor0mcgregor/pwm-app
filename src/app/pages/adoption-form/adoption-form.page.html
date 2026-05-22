@@ -1,13 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/catalogo" text="Atrás"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Solicitud de Adopción</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
+  <div class="floating-back-btn">
+    <ion-back-button defaultHref="/tabs/catalogo" text=""></ion-back-button>
+  </div>
   <div class="form-container">
     <ng-container *ngIf="animal$ | async as animal">
       <section class="request-summary">

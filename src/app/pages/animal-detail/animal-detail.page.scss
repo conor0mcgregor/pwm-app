@@ -1,3 +1,28 @@
+.floating-back-btn {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  z-index: 100;
+  
+  ion-back-button {
+    --color: var(--ion-color-primary);
+    --background: var(--ion-color-light);
+    --background-activated: rgba(42, 111, 98, 0.08);
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    
+    &::part(native) {
+      padding: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid rgba(42, 111, 98, 0.06);
+    }
+  }
+}
+
 .detail-container {
   padding-bottom: 110px;
 }

@@ -13,7 +13,6 @@ import {
   IonCardTitle,
   IonCol,
   IonContent,
-  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
@@ -25,8 +24,6 @@ import {
   IonSelect,
   IonSelectOption,
   IonSkeletonText,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 
 import { Animal, AnimalFilters } from '../../models/animal.model';
@@ -49,7 +46,6 @@ import { AnimalService } from '../../services/animal.service';
     IonCardTitle,
     IonCol,
     IonContent,
-    IonHeader,
     IonIcon,
     IonItem,
     IonLabel,
@@ -61,8 +57,6 @@ import { AnimalService } from '../../services/animal.service';
     IonSelect,
     IonSelectOption,
     IonSkeletonText,
-    IonTitle,
-    IonToolbar,
   ],
 })
 export class CatalogPage implements OnInit {

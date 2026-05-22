@@ -5,9 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonBackButton,
   IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
@@ -17,8 +15,6 @@ import {
   IonSelectOption,
   IonTextarea,
   IonText,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Observable, switchMap } from 'rxjs';
 
@@ -37,9 +33,7 @@ import { AuthService } from '../../services/auth.service';
     RouterLink,
     IonBackButton,
     IonButton,
-    IonButtons,
     IonContent,
-    IonHeader,
     IonIcon,
     IonInput,
     IonItem,
@@ -49,8 +43,6 @@ import { AuthService } from '../../services/auth.service';
     IonSelectOption,
     IonTextarea,
     IonText,
-    IonTitle,
-    IonToolbar,
   ],
 })
 export class AdoptionFormPage {

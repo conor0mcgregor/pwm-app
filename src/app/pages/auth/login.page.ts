@@ -3,17 +3,15 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
+  IonBackButton,
   IonButton,
   IonContent,
-  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
   IonLabel,
   IonList,
   IonText,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 
 import { AuthService } from '../../services/auth.service';
@@ -26,17 +24,15 @@ import { AuthService } from '../../services/auth.service';
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
+    IonBackButton,
     IonButton,
     IonContent,
-    IonHeader,
     IonIcon,
     IonInput,
     IonItem,
     IonLabel,
     IonList,
     IonText,
-    IonTitle,
-    IonToolbar,
   ],
 })
 export class LoginPage {

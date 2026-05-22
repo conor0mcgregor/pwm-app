@@ -5,14 +5,10 @@ import {
   IonBackButton,
   IonBadge,
   IonButton,
-  IonButtons,
   IonChip,
   IonContent,
-  IonHeader,
   IonIcon,
   IonLabel,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Observable, switchMap } from 'rxjs';
 
@@ -29,14 +25,10 @@ import { AnimalService } from '../../services/animal.service';
     IonBackButton,
     IonBadge,
     IonButton,
-    IonButtons,
     IonChip,
     IonContent,
-    IonHeader,
     IonIcon,
     IonLabel,
-    IonTitle,
-    IonToolbar,
   ],
 })
 export class AnimalDetailPage {

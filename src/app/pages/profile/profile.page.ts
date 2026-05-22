@@ -6,14 +6,11 @@ import { Router, RouterLink } from '@angular/router';
 import {
   IonButton,
   IonContent,
-  IonHeader,
   IonIcon,
   IonInput,
   IonItem,
   IonLabel,
   IonList,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { combineLatest, of, switchMap } from 'rxjs';
 
@@ -36,14 +33,11 @@ type AdoptedAnimal = Adopcion & { animal?: Animal };
     RouterLink,
     IonButton,
     IonContent,
-    IonHeader,
     IonIcon,
     IonInput,
     IonItem,
     IonLabel,
     IonList,
-    IonTitle,
-    IonToolbar,
   ],
 })
 export class ProfilePage implements OnInit {
