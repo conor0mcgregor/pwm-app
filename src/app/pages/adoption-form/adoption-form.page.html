@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/catalogo"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Solicitud</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="animal$ | async as animal">
+    <section class="request-summary">
+      <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
+      <div>
+        <ion-note>Solicitud de adopcion</ion-note>
+        <h1>{{ animal.nombre }}</h1>
+        <p>{{ animal.raza }} · {{ animal.edad }} anos</p>
+      </div>
+    </section>
+  </ng-container>
+
+  <form [formGroup]="adoptionForm" (ngSubmit)="submit()" class="form-shell">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="stacked">Motivo de la adopcion</ion-label>
+        <ion-textarea
+          formControlName="motivo"
+          auto-grow="true"
+          placeholder="Cuentanos por que quieres adoptar y como seria su dia a dia contigo."
+        ></ion-textarea>
+      </ion-item>
+      <ion-text color="danger" class="field-error" *ngIf="adoptionForm.controls.motivo.touched && adoptionForm.controls.motivo.invalid">
+        El motivo es obligatorio y debe tener al menos 20 caracteres.
+      </ion-text>
+
+      <ion-item>
+        <ion-label>Tipo de vivienda</ion-label>
+        <ion-select formControlName="vivienda" interface="popover">
+          <ion-select-option value="piso">Piso</ion-select-option>
+          <ion-select-option value="casa">Casa</ion-select-option>
+          <ion-select-option value="casa-con-jardin">Casa con jardin</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Experiencia previa</ion-label>
+        <ion-input formControlName="experiencia" placeholder="Opcional"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button type="submit" expand="block" size="large" [disabled]="isSubmitting">
+      <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+      Enviar solicitud
+    </ion-button>
+
+    <ion-button fill="clear" expand="block" routerLink="/login">
+      <ion-icon name="log-in-outline" slot="start"></ion-icon>
+      Iniciar sesion antes
+    </ion-button>
+  </form>
+</ion-content>

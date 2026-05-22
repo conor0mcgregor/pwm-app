@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Resenas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section class="reviews-intro">
+    <h1>Experiencias con el refugio</h1>
+    <p>Comparte como ha sido tu proceso y ayuda a otras familias a dar el paso.</p>
+  </section>
+
+  <form [formGroup]="reviewForm" (ngSubmit)="submit()" class="review-form">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label>Valoracion</ion-label>
+        <ion-select formControlName="valoracion" interface="popover">
+          <ion-select-option *ngFor="let star of starIndexes" [value]="star">{{ star }} estrellas</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Comentario</ion-label>
+        <ion-textarea formControlName="comentario" auto-grow="true" placeholder="Cuenta tu experiencia"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <ion-button type="submit" expand="block">
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      Anadir resena
+    </ion-button>
+  </form>
+
+  <section class="reviews-feed">
+    <article class="review-item" *ngFor="let review of reviews">
+      <div class="review-heading">
+        <div>
+          <h2>{{ review.usuario }}</h2>
+          <ion-note>{{ review.fecha | date: 'dd/MM/yyyy' }}</ion-note>
+        </div>
+        <div class="stars" aria-label="Valoracion {{ review.valoracion }} de 5">
+          <ion-icon *ngFor="let star of starIndexes" [name]="star <= review.valoracion ? 'star' : 'star-outline'"></ion-icon>
+        </div>
+      </div>
+      <p>{{ review.comentario }}</p>
+    </article>
+  </section>
+</ion-content>

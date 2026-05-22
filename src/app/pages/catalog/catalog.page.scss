@@ -1,0 +1,101 @@
+.catalog-hero {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 18px 10px;
+}
+
+.catalog-hero img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.catalog-hero p {
+  margin: 0 0 4px;
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+}
+
+.catalog-hero h1 {
+  margin: 0;
+  color: var(--ion-color-dark);
+  font-size: 1.9rem;
+  font-weight: 800;
+}
+
+.filters {
+  padding: 0 12px 10px;
+}
+
+.filters ion-searchbar {
+  padding-inline: 0;
+}
+
+.filters ion-list {
+  margin-top: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.animal-grid,
+.loading-list {
+  padding: 0 10px 96px;
+}
+
+.animal-card {
+  margin: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(24, 38, 63, 0.1);
+  overflow: hidden;
+}
+
+.animal-card > img,
+.image-skeleton {
+  display: block;
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-heading ion-badge {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+.animal-card p {
+  display: -webkit-box;
+  margin: 0 0 14px;
+  overflow: hidden;
+  color: var(--ion-color-medium-shade);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.animal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.animal-meta ion-note {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(82, 121, 111, 0.12);
+}
+
+.empty-state {
+  display: block;
+  padding: 32px 24px 96px;
+  text-align: center;
+}

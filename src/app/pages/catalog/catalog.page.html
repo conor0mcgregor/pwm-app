@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Refugio Animal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section class="catalog-hero">
+    <img src="assets/img/Logo.png" alt="Refugio Animal" />
+    <div>
+      <p>Encuentra un companero</p>
+      <h1>Animales en adopcion</h1>
+    </div>
+  </section>
+
+  <section class="filters" aria-label="Filtros del catalogo">
+    <ion-searchbar
+      [(ngModel)]="filters.search"
+      [debounce]="200"
+      placeholder="Buscar por nombre, raza o descripcion"
+      show-clear-button="focus"
+      (ionInput)="applyFilters()"
+    ></ion-searchbar>
+
+    <ion-segment [(ngModel)]="filters.especie" scrollable="true" (ionChange)="applyFilters()">
+      <ion-segment-button *ngFor="let especie of especies" [value]="especie">
+        <ion-label>{{ especie === 'todos' ? 'Todos' : especie }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-list lines="none">
+      <ion-item>
+        <ion-icon name="funnel-outline" slot="start"></ion-icon>
+        <ion-label>Edad</ion-label>
+        <ion-select [(ngModel)]="filters.edad" interface="popover" (ionChange)="applyFilters()">
+          <ion-select-option value="todas">Todas</ion-select-option>
+          <ion-select-option value="joven">Hasta 2 anos</ion-select-option>
+          <ion-select-option value="adulto">3 a 7 anos</ion-select-option>
+          <ion-select-option value="senior">Mas de 7 anos</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </section>
+
+  <div class="loading-list" *ngIf="isLoading">
+    <ion-card *ngFor="let item of [1, 2, 3]">
+      <ion-skeleton-text [animated]="true" class="image-skeleton"></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text [animated]="true" style="width: 55%"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 35%"></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  <ion-row class="animal-grid" *ngIf="!isLoading && filteredAnimals.length">
+    <ion-col size="12" sizeMd="6" sizeLg="4" *ngFor="let animal of filteredAnimals; trackBy: trackByAnimalId">
+      <ion-card class="animal-card">
+        <img [src]="animal.fotos[0]" [alt]="animal.nombre" />
+        <ion-card-header>
+          <div class="card-heading">
+            <div>
+              <ion-card-title>{{ animal.nombre }}</ion-card-title>
+              <ion-card-subtitle>{{ animal.raza }} · {{ animal.edad }} anos</ion-card-subtitle>
+            </div>
+            <ion-badge [color]="animal.estado === 'disponible' ? 'success' : 'medium'">
+              {{ animal.estado }}
+            </ion-badge>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>{{ animal.descripcion }}</p>
+          <div class="animal-meta">
+            <ion-note>{{ animal.especie }}</ion-note>
+            <ion-note>{{ animal.sexo }}</ion-note>
+            <ion-note>{{ animal.tasaAdopcion | currency: 'EUR' }}</ion-note>
+          </div>
+          <ion-button expand="block" [routerLink]="['/animal', animal.id]">
+            <ion-icon name="heart-outline" slot="start"></ion-icon>
+            Ver ficha
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-text color="medium" class="empty-state" *ngIf="!isLoading && !filteredAnimals.length">
+    No hay animales que coincidan con esos filtros.
+  </ion-text>
+</ion-content>

@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Iniciar sesion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section class="auth-hero">
+    <img src="assets/img/Logo.png" alt="Refugio Animal" />
+    <h1>Bienvenido de vuelta</h1>
+    <p>Accede para solicitar adopciones y gestionar tu perfil.</p>
+  </section>
+
+  <form [formGroup]="loginForm" (ngSubmit)="submit()" class="auth-form">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input formControlName="email" type="email" autocomplete="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Contrasena</ion-label>
+        <ion-input formControlName="password" type="password" autocomplete="current-password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-text color="danger" class="field-error" *ngIf="loginForm.touched && loginForm.invalid">
+      Introduce un email valido y una contrasena de al menos 6 caracteres.
+    </ion-text>
+
+    <ion-button type="submit" expand="block" size="large" [disabled]="isSubmitting">
+      <ion-icon name="log-in-outline" slot="start"></ion-icon>
+      Entrar
+    </ion-button>
+
+    <ion-button fill="clear" expand="block" routerLink="/registro">
+      <ion-icon name="create-outline" slot="start"></ion-icon>
+      Crear cuenta
+    </ion-button>
+  </form>
+</ion-content>
