@@ -189,7 +189,11 @@ export class ProfilePage implements OnInit {
         ? this.reviewService.deleteReviewByAnimalId(adoption.animalId, this.currentUser.uid)
         : of(undefined)
       )
-    ).subscribe();
+    ).subscribe(() => {
+      if (adoption?.animalId) {
+        this.reviewedAnimalIds = this.reviewedAnimalIds.filter(rid => rid !== adoption.animalId);
+      }
+    });
   }
 
   logout(): void {

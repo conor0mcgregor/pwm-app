@@ -1,29 +1,53 @@
 <ion-content [fullscreen]="true">
   <div class="about-container">
+
+    <!-- Hero -->
     <section class="about-hero">
       <img src="assets/img/sobre_nosotros/Foto1.png" alt="Equipo del refugio" />
       <div class="about-hero-overlay">
         <span class="badge-tag">Sobre nosotros</span>
-        <h1>Refugio Animal</h1>
+        <h1>Refugio<br><em>Animal</em></h1>
       </div>
+      <div class="hero-blur-bottom"></div>
     </section>
 
+    <!-- Copy -->
     <section class="about-copy">
-      <div class="accent-line"></div>
       <p>
-        Somos un refugio dedicado al rescate, cuidado y adopción responsable de animales. Nuestro objetivo es encontrar
-        familias que entiendan las necesidades de cada animal y puedan ofrecerle un hogar estable.
+        Somos un refugio dedicado al <strong>rescate, cuidado y adopción responsable</strong> de animales.
+        Nuestro objetivo es encontrar familias que entiendan las necesidades de cada animal
+        y puedan ofrecerle un hogar estable.
       </p>
     </section>
 
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num">+200</span>
+        <span class="stat-label">Adoptados</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">12</span>
+        <span class="stat-label">Años activos</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">98%</span>
+        <span class="stat-label">Satisfacción</span>
+      </div>
+    </div>
+
+    <!-- Info cards -->
     <ion-list class="info-cards-list" lines="none">
+
       <ion-item class="info-card-item">
         <div class="info-card-content">
           <div class="icon-wrapper contact-icon">
             <ion-icon name="call-outline"></ion-icon>
           </div>
           <div class="text-wrapper">
-            <h2>Contacto</h2>
+            <span class="card-label">Contacto</span>
             <p class="main-text">+34 928 000 000</p>
             <p class="sub-text">refugio@adopta.es</p>
           </div>
@@ -36,7 +60,7 @@
             <ion-icon name="time-outline"></ion-icon>
           </div>
           <div class="text-wrapper">
-            <h2>Horario</h2>
+            <span class="card-label">Horario</span>
             <p class="main-text">Lunes a Viernes</p>
             <p class="sub-text">09:00 a 18:00</p>
           </div>
@@ -49,14 +73,16 @@
             <ion-icon name="location-outline"></ion-icon>
           </div>
           <div class="text-wrapper">
-            <h2>Ubicación</h2>
+            <span class="card-label">Ubicación</span>
             <p class="main-text">Las Palmas de GC</p>
             <p class="sub-text">Canarias, España</p>
           </div>
         </div>
       </ion-item>
+
     </ion-list>
 
+    <!-- Bottom gallery -->
     <section class="bottom-gallery">
       <div class="gallery-wrapper">
         <img class="about-photo" src="assets/img/sobre_nosotros/Foto2.png" alt="Instalaciones del refugio" />
@@ -66,6 +92,6 @@
         </div>
       </div>
     </section>
+
   </div>
 </ion-content>
-

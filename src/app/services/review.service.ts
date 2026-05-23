@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, getDocs, Firestore } from '@angular/fire/firestore';
 import { BehaviorSubject, catchError, from, map, Observable, of, switchMap } from 'rxjs';
 
 import { SEED_REVIEWS } from '../data/seed-data';
@@ -82,10 +82,10 @@ export class ReviewService {
       where('idUsuario', '==', userId)
     );
 
-    return collectionData(q, { idField: 'id' }).pipe(
-      switchMap((docs: any[]) => {
-        if (!docs.length) return of(undefined);
-        return from(deleteDoc(doc(this.firestore!, 'resenas', docs[0].id)));
+    return from(getDocs(q)).pipe(
+      switchMap((snapshot) => {
+        if (snapshot.empty) return of(undefined);
+        return from(deleteDoc(doc(this.firestore!, 'resenas', snapshot.docs[0].id)));
       }),
       catchError(() => of(undefined))
     );
