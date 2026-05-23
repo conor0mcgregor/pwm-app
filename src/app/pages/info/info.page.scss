@@ -81,10 +81,9 @@
 
   p {
     margin: 0;
-    color: var(--ion-text-color);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 0.98rem;
     line-height: 1.6;
-    opacity: 0.85;
   }
 }
 
@@ -97,13 +96,13 @@
   gap: 16px;
 
   .info-card-item {
-    --background: var(--ion-color-light);
+    --background: rgba(255, 255, 255, 0.06);
     --border-radius: var(--border-radius-md);
     --padding-start: 16px;
     --padding-end: 16px;
     --inner-padding-end: 0;
     --min-height: auto;
-    border: 1px solid rgba(42, 111, 98, 0.05);
+    border: 1px solid rgba(42, 111, 98, 0.12);
     box-shadow: var(--soft-shadow);
     margin-bottom: 0 !important;
     transition: var(--transition-smooth);
@@ -111,7 +110,7 @@
     &:hover {
       transform: translateY(-4px);
       box-shadow: var(--medium-shadow);
-      border-color: rgba(42, 111, 98, 0.15);
+      border-color: rgba(42, 111, 98, 0.2);
     }
 
     &::part(native) {
@@ -141,18 +140,18 @@
     }
 
     &.contact-icon {
-      background: rgba(42, 111, 98, 0.08);
+      background: rgba(42, 111, 98, 0.12);
       color: var(--ion-color-primary);
     }
 
     &.time-icon {
-      background: rgba(226, 135, 67, 0.08);
+      background: rgba(226, 135, 67, 0.12);
       color: var(--ion-color-secondary);
     }
 
     &.location-icon {
-      background: rgba(43, 108, 176, 0.08);
-      color: #2b6cb0;
+      background: rgba(43, 108, 176, 0.12);
+      color: #5b9bd5;
     }
   }
 
@@ -161,21 +160,20 @@
       margin: 0 0 2px 0;
       font-size: 1.05rem;
       font-weight: 700;
-      color: var(--ion-text-color);
+      color: #ffffff;
     }
 
     .main-text {
       margin: 0;
       font-size: 0.9rem;
       font-weight: 600;
-      color: var(--ion-text-color);
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .sub-text {
       margin: 2px 0 0 0;
       font-size: 0.8rem;
-      color: var(--ion-color-medium-shade);
+      color: rgba(255, 255, 255, 0.45);
     }
   }
 }
@@ -208,14 +206,14 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(20, 30, 28, 0.88);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 14px 18px;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-top: 1px solid rgba(42, 111, 98, 0.06);
+    border-top: 1px solid rgba(42, 111, 98, 0.08);
     z-index: 2;
 
     ion-icon {
@@ -226,9 +224,8 @@
     span {
       font-size: 0.82rem;
       font-weight: 600;
-      color: var(--ion-text-color);
+      color: #ffffff;
       letter-spacing: -0.01em;
     }
   }
 }
-

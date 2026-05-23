@@ -4,7 +4,8 @@ import { catchError, map, Observable, of } from 'rxjs';
 
 import { SEED_ANIMALS } from '../data/seed-data';
 import { Animal, AnimalFilters } from '../models/animal.model';
-
+import { doc, updateDoc } from '@angular/fire/firestore';
+import { from } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AnimalService {
   private readonly firestore = inject(Firestore, { optional: true });
@@ -65,5 +66,15 @@ export class AnimalService {
 
       return matchesSearch && matchesSpecies && matchesAge;
     });
+  }
+  updateAnimalStatus(id: string, estado: 'disponible' | 'adoptado'): Observable<void> {
+    if (!this.firestore) {
+      // Actualizar en el seed local (solo en memoria)
+      const animal = SEED_ANIMALS.find(a => a.id === id);
+      if (animal) animal.estado = estado;
+      return of(undefined);
+    }
+
+    return from(updateDoc(doc(this.firestore, 'animales', id), { estado }));
   }
 }

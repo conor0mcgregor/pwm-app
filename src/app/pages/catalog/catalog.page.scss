@@ -52,43 +52,31 @@
 
   .filter-controls {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
 
     .segment-container {
-      flex: 1 1 auto;
-      min-width: 200px;
+      width: 100%;
+
+      ion-segment {
+        --padding-start: 0;
+        --padding-end: 0;
+        width: 100%;
+      }
+
+      ion-segment-button {
+        min-width: fit-content;
+        --padding-start: 10px;
+        --padding-end: 10px;
+        font-size: 0.82rem;
+      }
     }
 
     .select-container {
-      flex: 0 0 auto;
+      width: 100%;
 
-      .age-filter-item {
-        --background: rgba(42, 111, 98, 0.04) !important;
-        border: none !important;
-        margin-bottom: 0 !important;
-        --min-height: 46px;
-        border-radius: 99px !important;
-
-        ion-icon {
-          color: var(--ion-color-primary);
-          font-size: 1.1rem;
-          margin-inline-end: 4px;
-        }
-
-        ion-label {
-          display: none;
-        }
-
-        ion-select {
-          font-family: 'Outfit', sans-serif;
-          font-size: 0.88rem;
-          font-weight: 600;
-          color: var(--ion-color-primary);
-          --padding-start: 8px;
-          --padding-end: 8px;
-        }
+      ion-select {
+        width: 100%;
       }
     }
   }
@@ -245,3 +233,17 @@
   }
 }
 
+ion-popover {
+  --background: var(--ion-background-color);
+
+  ion-select-popover {
+    ion-list {
+      background: var(--ion-background-color) !important;
+    }
+
+    ion-item {
+      --background: var(--ion-background-color);
+      --color: var(--ion-text-color);
+    }
+  }
+}

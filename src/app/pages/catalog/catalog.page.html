@@ -29,16 +29,20 @@
       </div>
 
       <div class="select-container">
-        <ion-item lines="none" class="age-filter-item">
-          <ion-icon name="funnel-outline" slot="start"></ion-icon>
-          <ion-label>Edad</ion-label>
-          <ion-select [(ngModel)]="filters.edad" interface="popover" (ionChange)="applyFilters()">
-            <ion-select-option value="todas">Todas</ion-select-option>
-            <ion-select-option value="joven">Hasta 2 años</ion-select-option>
-            <ion-select-option value="adulto">3 a 7 años</ion-select-option>
-            <ion-select-option value="senior">Más de 7 años</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <ion-select
+          [(ngModel)]="filters.edad"
+          interface="popover"
+          (ionChange)="applyFilters()"
+          label="Edad"
+          labelPlacement="stacked"
+          fill="outline"
+          placeholder="Todas las edades"
+        >
+          <ion-select-option value="todas">Todas</ion-select-option>
+          <ion-select-option value="joven">Hasta 2 años</ion-select-option>
+          <ion-select-option value="adulto">3 a 7 años</ion-select-option>
+          <ion-select-option value="senior">Más de 7 años</ion-select-option>
+        </ion-select>
       </div>
     </div>
   </section>
@@ -64,7 +68,7 @@
             </ion-badge>
           </div>
         </div>
-        
+
         <ion-card-header>
           <ion-card-title>{{ animal.nombre }}</ion-card-title>
           <ion-card-subtitle>{{ animal.raza }} · {{ animal.edad }} {{ animal.edad === 1 ? 'año' : 'años' }}</ion-card-subtitle>

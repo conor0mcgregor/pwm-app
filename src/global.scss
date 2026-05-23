@@ -238,4 +238,24 @@ ion-badge {
     color: #7f8c8d !important;
   }
 }
+ion-popover.select-popover {
+  --background: #1e1e1e;
 
+  ion-list {
+    background: #1e1e1e !important;
+  }
+
+  ion-item {
+    --background: #1e1e1e;
+    --color: #ffffff;
+  }
+
+  ion-radio {
+    --color: #ffffff;
+    --color-checked: var(--ion-color-primary);
+  }
+
+  ion-label {
+    color: #ffffff !important;
+  }
+}

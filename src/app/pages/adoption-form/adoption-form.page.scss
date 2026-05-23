@@ -3,7 +3,7 @@
   top: 24px;
   left: 20px;
   z-index: 100;
-  
+
   ion-back-button {
     --color: var(--ion-color-primary);
     --background: var(--ion-color-light);
@@ -11,7 +11,7 @@
     width: 42px;
     height: 42px;
     margin: 0;
-    
+
     &::part(native) {
       padding: 0;
       width: 42px;
@@ -36,10 +36,10 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    background: var(--ion-color-light);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: var(--border-radius-lg);
     padding: 16px;
-    border: 1px solid rgba(42, 111, 98, 0.06);
+    border: 1px solid rgba(42, 111, 98, 0.12);
     box-shadow: var(--soft-shadow);
 
     img {
@@ -68,14 +68,14 @@
         font-family: 'Outfit', sans-serif;
         font-size: 1.5rem;
         font-weight: 800;
-        color: var(--ion-text-color);
+        color: #ffffff;
         letter-spacing: -0.02em;
       }
 
       p {
         margin: 4px 0 0;
         font-size: 0.88rem;
-        color: var(--ion-color-medium);
+        color: rgba(255, 255, 255, 0.5);
       }
     }
   }
@@ -86,11 +86,11 @@
 }
 
 .form-card {
-  background: var(--ion-color-light);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: var(--border-radius-lg);
   padding: 24px 20px;
   box-shadow: var(--soft-shadow);
-  border: 1px solid rgba(42, 111, 98, 0.05);
+  border: 1px solid rgba(42, 111, 98, 0.12);
   margin-bottom: 24px;
 
   .form-header {
@@ -101,13 +101,13 @@
       font-family: 'Outfit', sans-serif;
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--ion-text-color);
+      color: #ffffff;
     }
 
     p {
       margin: 6px 0 0;
       font-size: 0.88rem;
-      color: var(--ion-color-medium);
+      color: rgba(255, 255, 255, 0.5);
       line-height: 1.45;
     }
   }
@@ -119,8 +119,8 @@
 }
 
 .form-item {
-  --background: var(--ion-color-light);
-  border: 1px solid rgba(42, 111, 98, 0.08);
+  --background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(42, 111, 98, 0.12);
   border-radius: var(--border-radius-md);
   margin-bottom: 16px !important;
   transition: var(--transition-smooth);
@@ -163,4 +163,3 @@
     margin: 0;
   }
 }
-

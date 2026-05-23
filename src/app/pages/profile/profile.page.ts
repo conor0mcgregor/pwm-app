@@ -103,7 +103,13 @@ export class ProfilePage implements OnInit {
   }
 
   cancelAdoption(id: string): void {
-    this.adoptionService.cancelAdoption(id).subscribe();
+    const adoption = this.adoptedAnimals.find(a => a.id === id);
+    this.adoptionService.cancelAdoption(id).pipe(
+      switchMap(() => adoption?.animalId
+        ? this.animalService.updateAnimalStatus(adoption.animalId, 'disponible')
+        : of(undefined)
+      )
+    ).subscribe();
   }
 
   logout(): void {

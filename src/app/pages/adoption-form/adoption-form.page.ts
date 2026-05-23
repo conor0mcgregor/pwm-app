@@ -83,14 +83,14 @@ export class AdoptionFormPage {
 
     this.isSubmitting = true;
     this.adoptionService
-      .requestAdoption({
-        usuarioId: currentUser.uid,
-        animalId,
-        motivo,
-      })
+      .requestAdoption({ usuarioId: currentUser.uid, animalId, motivo })
+      .pipe(
+        switchMap(() => this.animalService.updateAnimalStatus(animalId, 'adoptado'))
+      )
       .subscribe(() => {
         this.isSubmitting = false;
         this.router.navigate(['/tabs/perfil']);
       });
   }
+
 }

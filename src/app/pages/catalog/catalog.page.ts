@@ -92,4 +92,5 @@ export class CatalogPage implements OnInit {
   trackByAnimalId(_: number, animal: Animal): string {
     return animal.id;
   }
+
 }

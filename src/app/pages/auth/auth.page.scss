@@ -9,10 +9,10 @@
 .auth-card {
   width: 100%;
   max-width: 440px;
-  background: var(--ion-color-light);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--medium-shadow);
-  border: 1px solid rgba(42, 111, 98, 0.05);
+  border: 1px solid rgba(42, 111, 98, 0.12);
   overflow: hidden;
   transition: var(--transition-smooth);
   animation: cardFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -35,11 +35,11 @@
     width: 72px;
     height: 72px;
     border-radius: 20px;
-    background: rgba(42, 111, 98, 0.06);
+    background: rgba(42, 111, 98, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 16px rgba(42, 111, 98, 0.04);
+    box-shadow: 0 8px 16px rgba(42, 111, 98, 0.06);
 
     img {
       width: 42px;
@@ -52,17 +52,16 @@
     margin: 0 0 8px 0;
     font-size: 1.7rem;
     font-weight: 800;
-    color: var(--ion-text-color);
+    color: #ffffff;
     letter-spacing: -0.02em;
   }
 
   p {
     margin: 0 auto;
     font-size: 0.9rem;
-    color: var(--ion-color-medium-shade);
+    color: rgba(255, 255, 255, 0.5);
     line-height: 1.5;
     max-width: 340px;
-    opacity: 0.95;
   }
 }
 
@@ -80,13 +79,13 @@
   }
 
   .auth-input-item {
-    --background: var(--ion-color-light);
+    --background: rgba(255, 255, 255, 0.06);
     --border-radius: var(--border-radius-md);
     --padding-start: 16px;
     --padding-end: 16px;
     --inner-padding-end: 0;
     --min-height: 58px;
-    border: 1px solid rgba(42, 111, 98, 0.08);
+    border: 1px solid rgba(42, 111, 98, 0.12);
     margin-bottom: 12px !important;
     transition: var(--transition-smooth);
 
@@ -108,7 +107,7 @@
 
     ion-input {
       font-size: 0.95rem;
-      color: var(--ion-text-color);
+      color: #ffffff;
       --padding-top: 8px;
       --padding-bottom: 8px;
     }
@@ -175,11 +174,11 @@
   text-align: center;
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid rgba(42, 111, 98, 0.05);
+  border-top: 1px solid rgba(42, 111, 98, 0.08);
 
   p {
     font-size: 0.85rem;
-    color: var(--ion-color-medium-shade);
+    color: rgba(255, 255, 255, 0.45);
     margin: 0 0 6px 0;
   }
 
@@ -214,23 +213,22 @@
   top: 24px;
   left: 20px;
   z-index: 100;
-  
+
   ion-back-button {
     --color: var(--ion-color-primary);
-    --background: var(--ion-color-light);
+    --background: rgba(255, 255, 255, 0.08);
     --background-activated: rgba(42, 111, 98, 0.08);
     width: 42px;
     height: 42px;
     margin: 0;
-    
+
     &::part(native) {
       padding: 0;
       width: 42px;
       height: 42px;
       border-radius: 50%;
       box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(42, 111, 98, 0.06);
+      border: 1px solid rgba(42, 111, 98, 0.12);
     }
   }
 }
-
