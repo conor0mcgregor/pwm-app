@@ -257,3 +257,10 @@
     --padding-end: 8px;
   }
 }
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}

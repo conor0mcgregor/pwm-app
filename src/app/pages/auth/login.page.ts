@@ -47,6 +47,7 @@ export class LoginPage {
   });
 
   isSubmitting = false;
+  errorMessage = '';
 
   submit(): void {
     if (this.loginForm.invalid) {
@@ -56,9 +57,15 @@ export class LoginPage {
 
     this.isSubmitting = true;
     const { email, password } = this.loginForm.getRawValue();
-    this.authService.login(email, password).subscribe(() => {
-      this.isSubmitting = false;
-      this.router.navigateByUrl(this.route.snapshot.queryParamMap.get('returnUrl') ?? '/tabs/perfil');
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.router.navigateByUrl(this.route.snapshot.queryParamMap.get('returnUrl') ?? '/tabs/perfil');
+      },
+      error: () => {
+        this.isSubmitting = false;
+        this.errorMessage = 'Email o contraseña incorrectos.';
+      }
     });
   }
 }

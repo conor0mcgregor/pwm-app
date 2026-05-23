@@ -64,7 +64,6 @@ export class AuthService {
 
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap((credential) => this.resolveFirebaseUser(credential.user.uid, credential.user.email ?? email)),
-      catchError(() => of(this.loginLocally(email))),
       tap((usuario) => this.setSession(usuario)),
     );
   }

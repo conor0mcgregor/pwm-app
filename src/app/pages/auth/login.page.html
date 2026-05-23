@@ -16,11 +16,23 @@
         <ion-list lines="none" class="auth-fields-list">
           <ion-item class="auth-input-item">
             <ion-label position="stacked">Email</ion-label>
-            <ion-input formControlName="email" type="email" autocomplete="email" placeholder="ejemplo@adopta.es"></ion-input>
+            <ion-input
+              formControlName="email"
+              type="email"
+              autocomplete="email"
+              placeholder="ejemplo@adopta.es"
+              (ionInput)="errorMessage = ''"
+            ></ion-input>
           </ion-item>
           <ion-item class="auth-input-item">
             <ion-label position="stacked">Contraseña</ion-label>
-            <ion-input formControlName="password" type="password" autocomplete="current-password" placeholder="••••••••"></ion-input>
+            <ion-input
+              formControlName="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              (ionInput)="errorMessage = ''"
+            ></ion-input>
           </ion-item>
         </ion-list>
 
@@ -31,9 +43,14 @@
           </ion-text>
         </div>
 
+        <div class="error-container" *ngIf="errorMessage">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <ion-text class="field-error">{{ errorMessage }}</ion-text>
+        </div>
+
         <ion-button type="submit" class="btn-primary" expand="block" size="large" [disabled]="isSubmitting">
           <ion-icon name="log-in-outline" slot="start"></ion-icon>
-          Entrar
+          {{ isSubmitting ? 'Entrando...' : 'Entrar' }}
         </ion-button>
 
         <div class="auth-footer">
@@ -47,4 +64,3 @@
     </div>
   </div>
 </ion-content>
-

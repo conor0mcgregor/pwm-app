@@ -2,46 +2,13 @@
   <div class="reviews-container">
     <section class="reviews-intro">
       <h1>Experiencias con el refugio</h1>
-      <p>Comparte cómo ha sido tu proceso de adopción y ayuda a otras familias a dar el paso hacia una adopción responsable.</p>
+      <p>Opiniones de familias que han adoptado con nosotros.</p>
     </section>
 
-    <!-- Review Submission Form -->
-    <form [formGroup]="reviewForm" (ngSubmit)="submit()" class="review-form">
-      <div class="form-card">
-        <div class="form-header">
-          <h2>Cuéntanos tu experiencia</h2>
-          <p>Tu opinión es de gran valor para nosotros y para futuros adoptantes.</p>
-        </div>
-
-        <ion-list lines="none" class="custom-list">
-          <ion-item class="form-item">
-            <ion-label position="stacked">Valoración</ion-label>
-            <ion-select formControlName="valoracion" interface="popover" placeholder="Selecciona estrellas">
-              <ion-select-option *ngFor="let star of starIndexes" [value]="star">
-                {{ star }} {{ star === 1 ? 'estrella' : 'estrellas' }}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-          
-          <ion-item class="form-item">
-            <ion-label position="stacked">Tu Comentario</ion-label>
-            <ion-textarea formControlName="comentario" auto-grow="true" rows="3" placeholder="Escribe aquí tu reseña o comentario..."></ion-textarea>
-          </ion-item>
-        </ion-list>
-
-        <ion-button type="submit" expand="block" class="submit-review-btn">
-          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-          Añadir reseña
-        </ion-button>
-      </div>
-    </form>
-
-    <!-- Reviews List -->
     <section class="reviews-feed">
       <div class="feed-header">
         <h2>Opiniones de la comunidad</h2>
       </div>
-      
       <div class="feed-grid">
         <article class="review-item-card" *ngFor="let review of reviews" (click)="openReview(review)">
           <div class="card-header">
@@ -49,7 +16,7 @@
               <h3>{{ review.titulo || review.usuario }}</h3>
               <span class="review-date">{{ review.fecha | date: 'dd/MM/yyyy' }}</span>
             </div>
-            <div class="stars-rating" aria-label="Valoración {{ review.valoracion }} de 5">
+            <div class="stars-rating">
               <ion-icon *ngFor="let star of starIndexes" [name]="star <= (review.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
             </div>
           </div>
@@ -62,7 +29,6 @@
       </div>
     </section>
 
-    <!-- Review Detail Modal -->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeReview()" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.75, 0.9]" class="premium-bottom-modal">
       <ng-template>
         <ion-header>
@@ -78,24 +44,20 @@
             <div class="modal-media" *ngIf="selectedReview.foto">
               <img [src]="selectedReview.foto" alt="Foto de la reseña" />
             </div>
-            
             <div class="modal-header-section">
               <h2>{{ selectedReview.titulo || 'Experiencia' }}</h2>
               <div class="modal-meta-row">
-                <span class="user"><ion-icon name="person-outline"></ion-icon> {{ selectedReview.usuario }}</span>
-                <span class="date"><ion-icon name="calendar-outline"></ion-icon> {{ selectedReview.fecha | date: 'dd/MM/yyyy' }}</span>
+                <span><ion-icon name="person-outline"></ion-icon> {{ selectedReview.usuario }}</span>
+                <span><ion-icon name="calendar-outline"></ion-icon> {{ selectedReview.fecha | date: 'dd/MM/yyyy' }}</span>
               </div>
-              
               <div class="modal-rating">
                 <ion-icon *ngFor="let star of starIndexes" [name]="star <= (selectedReview.valoracion || 5) ? 'star' : 'star-outline'"></ion-icon>
               </div>
-
               <div class="adopted-badge" *ngIf="selectedReview.nombreAnimal">
                 <ion-icon name="paw"></ion-icon>
                 <span>Adoptado: <strong>{{ selectedReview.nombreAnimal }}</strong></span>
               </div>
             </div>
-
             <div class="modal-body-section">
               <p>{{ selectedReview.resena || selectedReview.comentario }}</p>
             </div>
@@ -105,4 +67,3 @@
     </ion-modal>
   </div>
 </ion-content>
-

@@ -1,6 +1,5 @@
 <ion-content [fullscreen]="true">
   <div class="profile-container">
-    <!-- Logged out Empty State -->
     <section class="profile-empty" *ngIf="!currentUser">
       <div class="empty-art">
         <div class="icon-bubble">
@@ -9,7 +8,6 @@
       </div>
       <h1>Accede a tu área personal</h1>
       <p>Inicia sesión para editar tus datos personales, gestionar tu cuenta y revisar tus solicitudes de adopción.</p>
-      
       <div class="empty-actions">
         <ion-button expand="block" routerLink="/login" class="login-btn">
           <ion-icon name="log-in-outline" slot="start"></ion-icon>
@@ -21,7 +19,6 @@
       </div>
     </section>
 
-    <!-- Logged In Content -->
     <ng-container *ngIf="currentUser">
       <section class="profile-header-card">
         <div class="header-content">
@@ -40,62 +37,55 @@
       </section>
 
       <div class="profile-content-grid">
-        <!-- Profile Info Form -->
-        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form-wrapper">
+
+        <!-- Datos -->
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
           <div class="section-card">
             <div class="section-header">
               <ion-icon name="create-outline"></ion-icon>
               <h2>Mis Datos</h2>
             </div>
-            
             <ion-list lines="none" class="custom-list">
               <ion-item class="form-item">
                 <ion-label position="stacked">Nombre</ion-label>
                 <ion-input formControlName="nombre" placeholder="Introduce tu nombre"></ion-input>
               </ion-item>
-              
               <ion-item class="form-item">
                 <ion-label position="stacked">Apellidos</ion-label>
                 <ion-input formControlName="apellidos" placeholder="Introduce tus apellidos"></ion-input>
               </ion-item>
-              
               <ion-item class="form-item">
                 <ion-label position="stacked">DNI</ion-label>
                 <ion-input formControlName="dni" placeholder="Introduce tu DNI"></ion-input>
               </ion-item>
-              
               <ion-item class="form-item">
                 <ion-label position="stacked">Dirección</ion-label>
                 <ion-input formControlName="direccion" placeholder="Introduce tu dirección"></ion-input>
               </ion-item>
-              
               <ion-item class="form-item">
                 <ion-label position="stacked">Teléfono</ion-label>
                 <ion-input formControlName="telefono" type="tel" placeholder="Introduce tu teléfono"></ion-input>
               </ion-item>
             </ion-list>
-
             <ion-button type="submit" expand="block" [disabled]="isSaving" class="save-btn">
               <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-              Guardar cambios
+              {{ isSaving ? 'Guardando...' : 'Guardar cambios' }}
             </ion-button>
           </div>
         </form>
 
-        <!-- Adopted Pets Section -->
-        <section class="adopted-section">
+        <!-- Solicitudes -->
+        <section>
           <div class="section-card">
             <div class="section-header">
               <ion-icon name="heart-outline"></ion-icon>
               <h2>Mis Solicitudes</h2>
             </div>
-            
             <div class="empty-adopted" *ngIf="!adoptedAnimals.length">
               <ion-icon name="paw-outline" class="paw-icon"></ion-icon>
               <p>Todavía no tienes solicitudes de adopción activas.</p>
               <ion-button fill="clear" routerLink="/tabs/catalogo" class="explore-btn">Explorar catálogo</ion-button>
             </div>
-
             <div class="adopted-list" *ngIf="adoptedAnimals.length">
               <div class="adopted-card" *ngFor="let adoption of adoptedAnimals">
                 <ng-container *ngIf="adoption.animal as animal">
@@ -107,16 +97,73 @@
                     <span class="breed-text">{{ animal.raza }}</span>
                     <span class="date-text">Solicitado: {{ adoption.fecha | date: 'dd/MM/yyyy' }}</span>
                   </div>
-                  <ion-button fill="clear" color="danger" class="cancel-btn" (click)="cancelAdoption(adoption.id)" aria-label="Cancelar solicitud">
-                    <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-                  </ion-button>
+                  <div class="card-actions">
+                    <ion-button
+                      fill="outline"
+                      size="small"
+                      [color]="hasReviewed(adoption.animalId) ? 'medium' : 'primary'"
+                      [disabled]="hasReviewed(adoption.animalId)"
+                      (click)="openReviewModal(adoption)"
+                    >
+                      <ion-icon [name]="hasReviewed(adoption.animalId) ? 'star' : 'star-outline'" slot="start"></ion-icon>
+                      {{ hasReviewed(adoption.animalId) ? 'Reseñado' : 'Reseña' }}
+                    </ion-button>
+                    <ion-button fill="clear" size="small" color="danger" (click)="cancelAdoption(adoption.id)">
+                      <ion-icon name="trash-outline" slot="start"></ion-icon>
+                      Cancelar
+                    </ion-button>
+                  </div>
                 </ng-container>
               </div>
             </div>
           </div>
         </section>
+
       </div>
     </ng-container>
   </div>
-</ion-content>
 
+  <!-- Modal reseña -->
+  <ion-modal [isOpen]="isReviewModalOpen" (didDismiss)="closeReviewModal()" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.75, 0.9]" class="premium-bottom-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Reseña de {{ selectedAdoption?.animal?.nombre }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeReviewModal()" color="primary">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding modal-content">
+        <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+          <ion-list lines="none" class="custom-list">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Valoración</ion-label>
+              <ion-select formControlName="valoracion" interface="popover" placeholder="Selecciona estrellas">
+                <ion-select-option *ngFor="let star of starIndexes" [value]="star">
+                  {{ star }} {{ star === 1 ? 'estrella' : 'estrellas' }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Comentario</ion-label>
+              <ion-textarea
+                formControlName="comentario"
+                auto-grow="true"
+                rows="4"
+                placeholder="Cuéntanos tu experiencia..."
+              ></ion-textarea>
+            </ion-item>
+          </ion-list>
+          <ion-text color="danger" *ngIf="reviewForm.controls.comentario.touched && reviewForm.controls.comentario.invalid" style="font-size: 0.82rem; padding: 0 4px; display: block; margin-bottom: 8px;">
+            El comentario debe tener al menos 10 caracteres.
+          </ion-text>
+          <ion-button type="submit" expand="block" [disabled]="isSubmittingReview" class="save-btn" style="margin-top: 16px;">
+            <ion-icon name="star-outline" slot="start"></ion-icon>
+            {{ isSubmittingReview ? 'Enviando...' : 'Publicar reseña' }}
+          </ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
